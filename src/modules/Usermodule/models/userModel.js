@@ -41,7 +41,7 @@ userSchema.methods.generateAuthToken = async function(){
     await user.save()
     return token
 }
-userSchema.methods.findByCredentials = async (email , password){
+userSchema.methods.findByCredentials = async (email , password)=>{
     const user = await User.findOne({email})
     if (!user){
         throw new Error ('Unable to Login')
