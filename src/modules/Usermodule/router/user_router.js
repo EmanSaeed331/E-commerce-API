@@ -6,19 +6,20 @@ const User = require('../models/userModel')
 mongoose.connect('mongodb://localhost:27017/E-commerce') */
 
 //Create User (Sign Up)
-router.post('/signup',async (req,res)=>{
+router.post('/signup',async(req,res)=>{
     console.log(req.body)
-   const user = new User(req.body)
-   const result = await user.save()
+    const user = new User(req.body)
+    const result = await user.save()
+    const token = await user.generateAuthToken()
     if(! result ){
         res.json({
-            status:"Faild",
+            status:"Failed",
             message:"User not register successfully"
         })
         
     }
     else {
-        res.status(201).send(req.body)
+        res.status(201).send({user , token})
     }
 })
 // Sign In 
