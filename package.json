@@ -4,8 +4,8 @@
   "description": "E-commerce APIs",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,8 @@
   "homepage": "https://github.com/EmanSaeed331/E-commerce-API#readme",
   "dependencies": {
     "express": "^4.17.3",
+    "mongodb": "^4.3.1",
+    "mongoose": "^5.13.14",
     "nodemon": "^2.0.15"
   }
 }
