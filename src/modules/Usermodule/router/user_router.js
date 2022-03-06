@@ -32,9 +32,9 @@ router.post('/signIn',async (req,res)=>{
 
         res.status(201).send({user,token})
     }
-    catch (e){
-        console.log(`error${ e}`)
-        res.status(400).send({error:e})
+    catch(e){
+        console.log(`error${e}`)
+        res.status(404).send(`${e}`)
     }
 })
 module.exports = router
