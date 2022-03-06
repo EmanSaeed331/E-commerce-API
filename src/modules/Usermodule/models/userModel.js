@@ -10,6 +10,7 @@ const userSchema =new mongoose.Schema({
     email:{
         type:String,
         require:true,
+        unique:true,
         default:'Test@gmail.com',
 
     },
@@ -20,7 +21,11 @@ const userSchema =new mongoose.Schema({
     password:{
         type:String,
         require:true,
-        default : 'Password '
+        default : 'Password'
+    },
+    phone:{
+        type:Number,
+        require:true
     },
     tokens:[{
         token:{
