@@ -23,15 +23,19 @@ router.post('/signup',async(req,res)=>{
     }
 })
 // Sign In 
-router.post('/signIn',(req,res)=>{
-    try{res.status(201).send({
-            'SignIn':true,
-            'user':'Eman',
-            'Age':'25'
-        })
+router.post('/signIn',async (req,res)=>{
+    try{
+        const user = await User.findByCredentials(req.body.email , req.body.password)
+        console.log(user)
+
+        const token = await user.generateAuthToken()
+        console.log(token)
+
+        res.status(201).send({user,token})
     }
-    catch(e){
-        res.status.send({error:e})
+    catch (e){
+        console.log(`error${ e}`)
+        res.status(400).send({error:e})
     }
 })
 module.exports = router
