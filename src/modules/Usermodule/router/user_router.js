@@ -1,13 +1,10 @@
 const express = require("express");
 const router =  express.Router()
 const User = require('../models/userModel')
-
-/* const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/E-commerce') */
+const { sendWelcomeEmail } = require('../emails/account')
 
 //Create User (Sign Up)
 router.post('/signup',async(req,res)=>{
-    console.log(req.body)
     const user = new User(req.body)
     const result = await user.save()
     const token = await user.generateAuthToken()
