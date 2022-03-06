@@ -10,7 +10,7 @@ const userSchema =new mongoose.Schema({
     email:{
         type:String,
         require:true,
-        default:'Test@gmail.com'
+        default:'Test@gmail.com',
 
     },
     age:{
