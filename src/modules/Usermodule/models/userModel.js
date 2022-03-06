@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const validator = require('validator')
 const userSchema =new mongoose.Schema({
     name:{
         type:String,
@@ -10,18 +11,31 @@ const userSchema =new mongoose.Schema({
     email:{
         type:String,
         require:true,
-        unique:true,
         default:'Test@gmail.com',
-
+        unique:true,
+        validate(value){
+            if (!validator.isEmail(value)){
+                throw new Error ('Email is not vald')
+            }
+        }
     },
     age:{
         type:Number,
-        default :0
+        default :0,
+        validate(value){
+            if(value <0){
+                throw new Error ('Age must be positive')
+            }
+        }
     },
     password:{
         type:String,
         require:true,
-        default : 'Password'
+        validate(value){
+            if (value.length <6){
+                throw new Error ('Password must be greater than 6 letters ')
+            }
+        }
     },
     phone:{
         type:Number,
