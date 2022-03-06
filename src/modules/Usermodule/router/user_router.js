@@ -16,6 +16,8 @@ router.post('/signup',async(req,res)=>{
         
     }
     else {
+        console.log(` {usermail:${user.email} , userName:${user.name}}`)
+        sendWelcomeEmail(user.email , user.name)
         res.status(201).send({user , token})
     }
 })

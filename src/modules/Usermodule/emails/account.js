@@ -19,8 +19,9 @@ const sendWelcomeEmail = async (email,name)=>{
    await sgMail.send({
         to:email,
         from:'es9557403@gmail.com',
-        subject:`Welcom to Katy Cat ${name}, Let me know how you get along the app`
-    })
+        subject:'katy Cat ' , 
+        text: `Welcome to Katy Cat ${name}, Let me know how you get along the app`,
+      })
 }
 
 module.exports = {sendWelcomeEmail}
