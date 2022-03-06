@@ -42,7 +42,13 @@ userSchema.statics.findByCredentials = async (email , password)=>{
     if (!user){
         throw new Error ('Unable to Login')
     }
-   
+     console.log(`user.password+${user.password}`)
+    console.log(`password+${password}`)
+
+    const isMatch = await bcrypt.compare(password , user.password)
+    if(!isMatch){
+        throw new Error ('password is not correct')
+    } 
     return user 
 }
 userSchema.methods.toJSON = function(){
