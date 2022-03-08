@@ -30,7 +30,6 @@ router.post('/signIn',async (req,res)=>{
 
         const token = await user.generateAuthToken()
         console.log(token)
-
         res.status(201).send({user,token})
     }
     catch(e){
@@ -39,20 +38,18 @@ router.post('/signIn',async (req,res)=>{
     }
 })
 // Updating user (name ,email, password)
-router.patch('/user/me',auth, async(req,res)=>{
-    const updates = Object.keys(req.body)
-    const allowUpdates = ['name','email','password']
-    const isValidOperation = updates.every((update)=> allowUpdates.includes(update))
-    if(!isValidOperation){
-        return res.status(400).send({error: 'Invalid updates'})
-    }
-    try{
-        updates.forEach((update)=> req.user[update] =req.body[update])
-        await req.user.save()
-        res.send(req.body)
+router.patch('/user/:id', async(req,res,next)=>{
+    try {
+        const id = req.params._id;
+        const updates = req.body;
+        const result = await User.findOneAndUpdate(id,updates);
+   
+        res.send(result)
+        
+        next()
     }
     catch(e){
-        res.status(400).send(e)
-    }
+        console.log(e.message);
+    } 
 })
 module.exports = router
