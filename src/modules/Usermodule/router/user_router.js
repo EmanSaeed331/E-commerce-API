@@ -3,7 +3,6 @@ const router =  express.Router()
 const User = require('../models/userModel')
 const { sendWelcomeEmail } = require('../emails/account')
 const auth = require('../../../middleware/auth')
-
 //Create User (Sign Up)
 router.post('/signup',async(req,res)=>{
     const user = new User(req.body)
@@ -16,8 +15,17 @@ router.post('/signup',async(req,res)=>{
         })
         
     }
+    // Validate input user
+    if (!(user.email && user.password && user.phone))
+        {req.status(400).send("All inputs are required")}
+    // Validate user  existence 
+     const existenceUser = await User.findOne({'user.email':user.email})
+    if (existenceUser){
+        return res.status(409).send({'error':'user is exist'})
+    } 
+
     else {
-        console.log(` {usermail:${user.email} , userName:${user.name}}`)
+        console.log(` {useremail:${user.email} , userName:${user.name}}`)
         sendWelcomeEmail(user.email , user.name)
         res.status(201).send({user , token})
     }
@@ -37,17 +45,26 @@ router.post('/signIn',async (req,res)=>{
         res.status(404).send(`${e}`)
     }
 })
+router.post("/welcome", auth, (req, res) => {
+    res.status(200).send("Welcome 🙌 ");
+  });
 // Updating user (name ,email, password)
-router.patch('/user/:id', async(req,res,next)=>{
-    try {
-        const id = req.params._id;
-        const updates = req.body;
-        const result = await User.findOneAndUpdate(id,updates);
-   
-        res.send(result)
-        
-        next()
-    }
+router.patch('/user/update',auth, async(req,res)=>{
+    var user = new User(req.body)
+
+        const updates = Object.keys(req.body)
+
+        const allowedUpdates = ['name', 'email', 'password']
+        const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+    
+        if (!isValidOperation) {
+            return res.status(400).send({ error: 'Invalid updates!' })
+        }
+        try {
+            updates.forEach((update)=> req.user[update] = req.body[update])
+            await user.save()
+            res.send(req.user)
+     }
     catch(e){
         console.log(e.message);
     } 

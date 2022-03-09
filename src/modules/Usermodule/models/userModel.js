@@ -12,10 +12,9 @@ const userSchema =new mongoose.Schema({
         type:String,
         require:true,
         default:'Test@gmail.com',
-        unique:true,
         validate(value){
             if (!validator.isEmail(value)){
-                throw new Error ('Email is not vald')
+                throw new Error ('Email is not valid')
             }
         }
     },
@@ -41,12 +40,14 @@ const userSchema =new mongoose.Schema({
         type:Number,
         require:true
     },
-    tokens:[{
+     tokens:[{
         token:{
             type:String,
             require:true
         }
-    }]
+    }] 
+   
+
 })
 
 userSchema.methods.generateAuthToken = async function(){
@@ -70,15 +71,20 @@ userSchema.statics.findByCredentials = async (email , password)=>{
     } 
     return user 
 }
-userSchema.methods.toJSON = function(){
-    const User = this
-    const userObject = User.toObject()
+
+userSchema.methods.toJSON = function (){
+    const user = this  
+    const userObject = user.toObject()
+    delete userObject.password
+    delete userObject.tokens
     return userObject
+
 }
+//encrypt the password 
 userSchema.pre("save",async function (next){
     const user = this 
     if (user.isModified('password')){
-        user.password = await bcrypt.hash(user.password , 8);
+        user.password = await bcrypt.hash(user.password , 8)
     }
     next()
 })
