@@ -6,6 +6,7 @@ const { sendWelcomeEmail } = require('../emails/account')
 const auth = require('../../../middleware/auth')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const resetPassword = require('../emails/resetPassword')
 require('dotenv').config()
 //Create User (Sign Up)
 router.post('/signup',async(req,res)=>{
@@ -40,6 +41,18 @@ router.post('/signIn',async (req,res)=>{
         res.status(404).send(`${e}`)
     }
 })
+
+// forget password 
+
+router.patch('/user/forgetPassword',auth , async(req, res) => {
+    const user = await User.findOne( {'user.email':user.email} );
+
+    if (!user) {
+        throw new Error("User does not exist");
+    }
+    resetPassword(user.email)
+
+})
 router.get("/welcome", auth, (req, res) => {
     res.status(200).send(req.user);
   });
@@ -63,15 +76,7 @@ router.patch('/user/update',auth, async(req,res)=>{
         res.status(400).send(e)
     }
 })
-router.patch('/update',auth, async (req,res)=>{
-    try{
-    const updatedUser = await User.findByIdAndUpdate(req.user) ;
-         res.json(updatedUser);
-    }
-    catch(e){
-        res.status(404).send(e)
-    }
-})
+
 
 //Deleting User 
 router.delete('/user/:id' , async (req,res,next)=>{
