@@ -15,6 +15,7 @@ productRouter.get('/getAllProducts',(req,res)=>{
 productRouter.patch('/updateProduct/:id', (req,res)=>{
     updateProduct(req,res)
 })
+// delete product
 productRouter.delete('/deleteProduct/:id',(req,res)=>{
     deleteProduct(req,res)
 })
