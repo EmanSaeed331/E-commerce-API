@@ -1,5 +1,5 @@
 const productRouter = require('express').Router()
-const { createProduct, getProduct } = require('../controller/product.controller')
+const { createProduct, getProduct ,updateProduct } = require('../controller/product.controller')
 
 
 //Create Product 
@@ -10,5 +10,9 @@ productRouter.post('/createProduct',(req,res) => {
 productRouter.get('/getAllProducts',(req,res)=>{
     getProduct(req,res)
     
+})
+// update product 
+productRouter.patch('/updateProduct/:id', (req,res)=>{
+    updateProduct(req,res)
 })
 module.exports = productRouter
