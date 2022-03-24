@@ -44,6 +44,18 @@ let updateProduct = async(req, res) => {
     }
 }
 // Delete product 
+let deleteProduct = async(req,res)=>{
+    try{
+        const product = await Product.findByIdAndDelete({_id:req.params.id})
+      
+        res.status(200).send({message:"deleted successfully"})
+    }
+    catch(error) {
+        console.log(error)
+        res.status(404).send({error})
+    }
+
+}
 // List product  (get all products )
 // add filter (simple filter sort by {name , price })
 // assign product to catalog 
@@ -53,4 +65,5 @@ module.exports =
     createProduct,
     getProduct,
     updateProduct,
+    deleteProduct
 }
