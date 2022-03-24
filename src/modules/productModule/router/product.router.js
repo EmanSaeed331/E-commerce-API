@@ -6,7 +6,7 @@ const { createProduct, getProduct ,updateProduct, deleteProduct} = require('../c
 productRouter.post('/createProduct',(req,res) => {
     createProduct(req,res)
 })
-// Get all products
+// List all  products
 productRouter.get('/getAllProducts',(req,res)=>{
     getProduct(req,res)
     
