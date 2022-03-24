@@ -1,5 +1,5 @@
 const productRouter = require('express').Router()
-const { createProduct, getProduct ,updateProduct, deleteProduct} = require('../controller/product.controller')
+const { createProduct, getProduct ,updateProduct, deleteProduct ,sortByNameAndPrice} = require('../controller/product.controller')
 
 
 //Create Product 
@@ -18,5 +18,9 @@ productRouter.patch('/updateProduct/:id', (req,res)=>{
 // delete product
 productRouter.delete('/deleteProduct/:id',(req,res)=>{
     deleteProduct(req,res)
+})
+// sortByNameAndPrice
+productRouter.get('/sortByNameAndPrice',(req,res)=>{
+    sortByNameAndPrice(req,res);
 })
 module.exports = productRouter

@@ -46,7 +46,7 @@ let updateProduct = async(req, res) => {
 // Delete product 
 let deleteProduct = async(req,res)=>{
     try{
-        const product = await Product.findByIdAndDelete({_id:req.params.id})
+        await Product.findByIdAndDelete({_id:req.params.id})
       
         res.status(200).send({message:"deleted successfully"})
     }
@@ -56,8 +56,22 @@ let deleteProduct = async(req,res)=>{
     }
 
 }
-// List product  (get all products )
 // add filter (simple filter sort by {name , price })
+let sortByNameAndPrice = async(req,res)=>{
+  // sort in descending (-1) order by length
+const sort = { productPrice : 1 , productDescription:1 };
+const query = {};
+
+try{
+    const sorted = await Product.find(query).sort(sort);
+
+
+    res.status(200).send({sorted})
+}
+catch(err){
+    console.log(err)
+    res.status(404).send(err)
+}}
 // assign product to catalog 
 
 module.exports = 
@@ -65,5 +79,6 @@ module.exports =
     createProduct,
     getProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    sortByNameAndPrice
 }
