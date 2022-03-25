@@ -37,12 +37,34 @@ let deleteCategory = async (req,res)=>{
 }
 // list Category
 // update Category 
+let updateCategory = async(req,res)=>{
+    const updates = Object.keys(req.body)
+    const allowedUpdates = ['categoryName','categoryDescription']
+    const isAvailable =updates.every((update)=>allowedUpdates.includes(update))
+    if (!isAvailable){
+        return res.status(404).send({message:'Invalid updates!'})
+    }
+    try{
+        const category = await Category.findOne({_id:req.params.id})
+        if (!category){
+            return res.status(404).send({message:'product not found'})
+        }
+        updates.forEach((update)=> category [update] = req.body[update])
+        await category.save()
+        res.status(200).send(category)
+    }
+    catch(error) {
+        console.log(error)
+        res.status(404).send({error})
+    }
+}
 
 // add products to Category
 
 module.exports ={ 
     createCategory,
     getCategory,
-    deleteCategory
+    deleteCategory,
+    updateCategory
 
 }
