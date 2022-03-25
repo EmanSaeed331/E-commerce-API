@@ -12,9 +12,21 @@ var createCategory = async(req,res)=>{
         res.status(404).send({error:e})
     }
 }
-// retrieve Category
+// retrieve Categories
+const getCategory = async(req, res) => {
+    try{
+    const category = await Category.find({})
+    res.status(200).send(category)
+    }
+    catch(err){
+        res.status(200).send({err:err})
+    }
+}
 // delete Category
 // list Category
 // add products to Category
 
-module.exports = createCategory
+module.exports ={ 
+    createCategory,
+    getCategory
+}

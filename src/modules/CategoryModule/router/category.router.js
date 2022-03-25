@@ -1,8 +1,14 @@
 const categoryRouter = require('express').Router()
-var createCategory = require('../controller/category.controller')
+var {createCategory , getCategory } = require('../controller/category.controller')
 
 categoryRouter.post('/createCategory',(req,res) => {
     createCategory(req,res)
+})
+
+// retrieve all categories
+
+categoryRouter.get('/getAllCategories' , (req,res)=>{
+    getCategory(req,res)
 })
 
 
