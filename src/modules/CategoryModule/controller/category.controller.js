@@ -23,10 +23,24 @@ const getCategory = async(req, res) => {
     }
 }
 // delete Category
+const deleteCategory = async (req,res)=>{
+    try{
+        await Category.findByIdAndDelete({_id:req.params.id})
+      
+        res.status(200).send({message:"deleted successfully"})
+    }
+    catch(error) {
+        console.log(error)
+        res.status(404).send({error})
+    }
+
+}
 // list Category
 // add products to Category
 
 module.exports ={ 
     createCategory,
-    getCategory
+    getCategory,
+    deleteCategory
+    
 }
