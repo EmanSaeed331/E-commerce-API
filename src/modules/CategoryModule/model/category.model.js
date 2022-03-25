@@ -9,5 +9,5 @@ var categorySchema = new mongoose.Schema({
         required:true 
     }
 })
-var categoryModel = new mongoose.Model('category',categorySchema)
+var categoryModel = new mongoose.model('category',categorySchema)
 module.exports = categoryModel
