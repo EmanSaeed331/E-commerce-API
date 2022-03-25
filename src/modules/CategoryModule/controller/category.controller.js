@@ -13,7 +13,7 @@ var createCategory = async(req,res)=>{
     }
 }
 // retrieve Categories
-const getCategory = async(req, res) => {
+let getCategory = async(req, res) => {
     try{
     const category = await Category.find({})
     res.status(200).send(category)
@@ -23,7 +23,7 @@ const getCategory = async(req, res) => {
     }
 }
 // delete Category
-const deleteCategory = async (req,res)=>{
+let deleteCategory = async (req,res)=>{
     try{
         await Category.findByIdAndDelete({_id:req.params.id})
       
@@ -36,11 +36,13 @@ const deleteCategory = async (req,res)=>{
 
 }
 // list Category
+// update Category 
+
 // add products to Category
 
 module.exports ={ 
     createCategory,
     getCategory,
     deleteCategory
-    
+
 }
