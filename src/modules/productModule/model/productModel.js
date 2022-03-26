@@ -15,5 +15,11 @@ const productSchema = new mongoose.Schema({
     }
     
 })
+productSchema.virtual('reviews', {
+    ref:'Review',
+    localField:'_id',
+    foreignField:'product'
+
+})
 const product = new mongoose.model('Product',productSchema)
 module.exports = product
