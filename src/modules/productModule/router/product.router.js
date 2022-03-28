@@ -1,5 +1,5 @@
 const productRouter = require('express').Router()
-const { createProduct, getProduct ,updateProduct, deleteProduct ,sortByNameAndPrice} = require('../controller/product.controller')
+const { createProduct, getProduct ,updateProduct, deleteProduct ,sortByNameAndPrice ,addProductToCatalog} = require('../controller/product.controller')
 
 
 //Create Product 
@@ -22,5 +22,9 @@ productRouter.delete('/deleteProduct/:id',(req,res)=>{
 // sortByNameAndPrice
 productRouter.get('/sortByNameAndPrice',(req,res)=>{
     sortByNameAndPrice(req,res);
+})
+// add product to specific category , id : category ID 
+productRouter.post('/addProduct/:id',(req,res)=>{
+    addProductToCatalog(req,res)
 })
 module.exports = productRouter

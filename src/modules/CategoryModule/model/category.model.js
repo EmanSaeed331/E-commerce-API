@@ -1,19 +1,24 @@
-const mongoose = require('mongoose') 
+const mongoose = require('mongoose')
+var product = require('../../productModule/model/productModel')
 var categorySchema = new mongoose.Schema({
-    "categoryName":{
+    categoryName:{
         type:String , 
         required:true
     },
-    "categoryDescription":{
+    categoryDescription:{
         type:String , 
         required:true 
-    }
+    },
+    products:[{
+        type:String , 
+    }]
+
   
 })
-categorySchema.virtual('products',{
+/* categorySchema.virtual('products',{
     ref:'Product',
     localField:'_id',
     foreignField:'category'
-})
+}) */
 var categoryModel = new mongoose.model('category',categorySchema)
 module.exports = categoryModel

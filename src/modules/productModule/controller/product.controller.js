@@ -1,4 +1,6 @@
 const Product = require('../model/productModel')
+var Category = require('../../CategoryModule/model/category.model')
+console.log(Category)
 
 // Create Product 
 const createProduct = async(req,res)=>{
@@ -73,6 +75,30 @@ catch(err){
     res.status(404).send(err)
 }}
 // assign product to catalog 
+let addProductToCatalog = async (req,res)=>{
+    var categoryID = req.params.id 
+    var category =await  Category.findById(categoryID)
+    if (category){
+    try{
+        var product = new Product ({
+            ...req.body
+            });
+         category.products.push(product);
+      
+         await category.save()
+        console.log('ccc'+category)
+
+        res.status(201).send(category)
+    }
+    catch(err){
+        res.status(404).send(err)
+    }
+}
+    
+    else{
+        res.status(404).send({message:"category not found" })
+    }
+}
 
 module.exports = 
 {
@@ -80,5 +106,6 @@ module.exports =
     getProduct,
     updateProduct,
     deleteProduct,
-    sortByNameAndPrice
+    sortByNameAndPrice,
+    addProductToCatalog
 }
