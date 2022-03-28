@@ -8,6 +8,12 @@ var categorySchema = new mongoose.Schema({
         type:String , 
         required:true 
     }
+  
+})
+categorySchema.virtual('products',{
+    ref:'Product',
+    localField:'_id',
+    foreignField:'category'
 })
 var categoryModel = new mongoose.model('category',categorySchema)
 module.exports = categoryModel
