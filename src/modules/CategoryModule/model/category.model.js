@@ -12,8 +12,6 @@ var categorySchema = new mongoose.Schema({
     products:[{
         type:String , 
     }]
-
-  
 })
 /* categorySchema.virtual('products',{
     ref:'Product',
