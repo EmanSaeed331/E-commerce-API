@@ -46,11 +46,40 @@ router.post('/signIn',async (req,res)=>{
 
 router.put('/user/forgetPassword',auth , async(req, res) => {
     let email = req.body
-    var token = await jwt.sign({email},process.env.JWT_SECRET)
+    var token =  jwt.sign({email},process.env.JWT_SECRET)
     //var token = await User.generateAuthToken()
     sendResetPasswordEmail(email,token)
     }); 
+// reset password 
+router.put ('/user/resetPassword',auth, async(req,res)=>{
+    var token = req.query.token 
+    if (!token){
+        res.status(404).send({message:" token not found "})
+    }
+    var  verifyToken = jwt.verify(token,process.env.JWT_SECRET)
+    if(verifyToken){
+        const updates = Object.keys(req.body)
+        const allowedUpdates = [ 'password']
+        const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+    
+        if (!isValidOperation) {
+            return res.status(400).send({ error: 'Invalid updates!' })
+        }
+    
+        try {
+            updates.forEach((update)=> req.user[update] = req.body[update])
+            await req.user.save()
+       
+        res.send(req.user)
+        } catch (e) {
+            res.status(400).send(e)
+        }
+    }
+    res.status(404).send({message:"token not verified "})
+    
 
+    
+})
 
 router.get("/welcome", auth, (req, res) => {
     res.status(200).send(req.user);
