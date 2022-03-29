@@ -2,10 +2,10 @@ require('dotenv').config()
 const express = require("express");
 const router =  express.Router()
 const User = require('../models/userModel')
+const jwt = require('jsonwebtoken')
 const { sendWelcomeEmail } = require('../emails/account')
 const auth = require('../../../middleware/auth')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+
 const sendResetPasswordEmail = require('../emails/resetPassword')
 require('dotenv').config()
 //Create User (Sign Up)
@@ -44,11 +44,14 @@ router.post('/signIn',async (req,res)=>{
 
 // forget password 
 
-router.patch('/user/forgetPassword',auth , async(req, res) => {
-    
-    sendResetPasswordEmail()
+router.put('/user/forgetPassword',auth , async(req, res) => {
+    let email = req.body
+    var token = await jwt.sign({email},process.env.JWT_SECRET)
+    //var token = await User.generateAuthToken()
+    sendResetPasswordEmail(email,token)
+    }); 
 
-})
+
 router.get("/welcome", auth, (req, res) => {
     res.status(200).send(req.user);
   });

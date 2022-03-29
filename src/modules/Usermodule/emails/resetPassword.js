@@ -1,10 +1,9 @@
 const sgMail = require('@sendgrid/mail')
 const User = require('../models/userModel')
 sgMail.setApiKey(process.env.SEND_API_KEY)
-const sendResetPasswordEmail = ()=>{
-    let token = new User.generateAuthToken()
+const sendResetPasswordEmail = async (email,token)=>{
 
-     sgMail.send({
+    await  sgMail.send({
         to: email,
         from: "es9557403@gmail.com",
         subject: "Password Recovery",
