@@ -6,7 +6,7 @@ const { sendWelcomeEmail } = require('../emails/account')
 const auth = require('../../../middleware/auth')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const resetPassword = require('../emails/resetPassword')
+const sendResetPasswordEmail = require('../emails/resetPassword')
 require('dotenv').config()
 //Create User (Sign Up)
 router.post('/signup',async(req,res)=>{
@@ -45,12 +45,8 @@ router.post('/signIn',async (req,res)=>{
 // forget password 
 
 router.patch('/user/forgetPassword',auth , async(req, res) => {
-    const user = await User.findOne( {'user.email':user.email} );
-
-    if (!user) {
-        throw new Error("User does not exist");
-    }
-    resetPassword(user.email)
+    
+    sendResetPasswordEmail()
 
 })
 router.get("/welcome", auth, (req, res) => {
