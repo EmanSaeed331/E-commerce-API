@@ -51,7 +51,6 @@ router.put('/user/forgetPassword',auth , async(req, res) => {
     //var token = await User.generateAuthToken()
     sendResetPasswordEmail(email,token)
     }); 
-    res.send({message:"email send"})
 // reset password 
 router.put ('/user/resetPassword',auth, async(req,res)=>{
     var token = req.query.token 
