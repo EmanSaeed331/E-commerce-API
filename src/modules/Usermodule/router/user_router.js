@@ -6,7 +6,8 @@ const jwt = require('jsonwebtoken')
 const { sendWelcomeEmail } = require('../emails/account')
 const auth = require('../../../middleware/auth')
 
-const sendResetPasswordEmail = require('../emails/resetPassword')
+const sendResetPasswordEmail = require('../emails/resetPassword');
+const res = require('express/lib/response');
 require('dotenv').config()
 //Create User (Sign Up)
 router.post('/signup',async(req,res)=>{
@@ -50,6 +51,7 @@ router.put('/user/forgetPassword',auth , async(req, res) => {
     //var token = await User.generateAuthToken()
     sendResetPasswordEmail(email,token)
     }); 
+    res.send({message:"email send"})
 // reset password 
 router.put ('/user/resetPassword',auth, async(req,res)=>{
     var token = req.query.token 
