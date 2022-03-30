@@ -7,7 +7,6 @@ const { sendWelcomeEmail } = require('../emails/account')
 const auth = require('../../../middleware/auth')
 
 const sendResetPasswordEmail = require('../emails/resetPassword');
-const res = require('express/lib/response');
 require('dotenv').config()
 //Create User (Sign Up)
 router.post('/signup',async(req,res)=>{
@@ -82,6 +81,7 @@ router.put ('/user/resetPassword',auth, async(req,res)=>{
     
 })
 
+// welcome 
 router.get("/welcome", auth, (req, res) => {
     res.status(200).send(req.user);
   });
