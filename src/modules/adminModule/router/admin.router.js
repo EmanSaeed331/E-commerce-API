@@ -1,5 +1,6 @@
 let adminRouter = require('express').Router()
-let { getUsersCount, getCategoriesCount, getAllProducts,AdminSignUp } = require('../controller/controller.admin')
+let { getUsersCount, getCategoriesCount, getAllProducts,AdminSignUp ,AdminLogin  } = require('../controller/controller.admin')
+let {AdminAuth} = require('../../../middleware/auth')
 
 // get All Users count 
 adminRouter.get('/Admin/getUserCount',(req,res) => {
@@ -20,8 +21,12 @@ adminRouter.get('/Admin/getProductCount',(req,res)=>{
 })
 
 // Admin SignUp 
-adminRouter.post('/Admin/SignUp',(req,res)=>{
+adminRouter.post('/Admin/SignUp',async(req,res)=>{
     AdminSignUp(req,res);
+})
+// Admin Login 
+adminRouter.post('/Admin/SignIn',async(req,res)=>{
+    AdminLogin(req,res)
 })
 
 module.exports = adminRouter

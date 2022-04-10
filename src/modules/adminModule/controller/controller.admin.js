@@ -1,7 +1,8 @@
 var users = require('../../Usermodule/models/userModel')
 var category = require('../../CategoryModule/model/category.model')
 var product = require('../../productModule/model/productModel')
-var Admin = require('../model/model.admin')
+var admin = require('../model/model.admin')
+
 
 // get Count of users 
 let getUsersCount = (req,res)=>{
@@ -36,20 +37,35 @@ let getAllProducts = (req,res)=>{
 }
 
 // signUp Admin
-let AdminSignUp  = (req,res)=>{
-    const admin = new Admin(req.body)
+let AdminSignUp  = async (req,res)=>{
+    const adminUser = new admin(req.body)
     try{
-     await admin.save();
-     sendWelcomeEmail(admin.email,admin.name)
-    const token =  await admin.generateAuthToken()
-     res.status(201).send({admin , token });
+     await adminUser.save();
+     console.log(`Adminnn${adminUser}`)
+     const token =  await adminUser.generateAuthToken()
+     res.status(201).send({adminUser , token });
     }
     catch (e){
+        console.log(e)
         res.status(400).send(e)
     }
 
 }
 //login Admin
+let AdminLogin =async (req,res)=>{
+    try{
+        const admin = await Admin.findByCredentials(req.body.email , req.body.password)
+        console.log(admin)
+
+        const token = await admin.generateAuthToken()
+        console.log(token)
+        res.status(201).send({admin,token})
+    }
+    catch(e){
+        console.log(`error${e}`)
+        res.status(404).send(`${e}`)
+    }
+}
 // update Admin
 // Delete Admin 
 
@@ -58,5 +74,6 @@ module.exports =
      getUsersCount ,
       getCategoriesCount,
       getAllProducts,
-      AdminSignUp
+      AdminSignUp,
+      AdminLogin
     }

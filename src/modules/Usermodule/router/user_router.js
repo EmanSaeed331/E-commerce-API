@@ -4,7 +4,7 @@ const router =  express.Router()
 const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 const { sendWelcomeEmail } = require('../emails/account')
-const auth = require('../../../middleware/auth')
+const {auth} = require('../../../middleware/auth')
 
 const sendResetPasswordEmail = require('../emails/resetPassword');
 require('dotenv').config()

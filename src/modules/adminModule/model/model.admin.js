@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const validator = require('validator');
 const adminSchema = new mongoose.Schema({
     name:{
         type:String,
@@ -44,9 +47,49 @@ const adminSchema = new mongoose.Schema({
             required:true,
         }
     }] ,
+    })
+
+
+    adminSchema.methods.generateAuthToken = async function(){
+        const admin = this
+        const token = jwt.sign({_id:admin._id.toString()},process.env.JWT_ADMIN_SECERT)
+        admin.tokens = admin.tokens.concat({token})
+        await admin.save()
+        return token
     }
+    adminSchema.statics.findByCredentials = async (email, password)=>{
+        const admin = await admin.findOne({email})
+        if(!admin) {
+            throw new Error ('Unable to Login')
+        }
+        console.log(`password${password}`)
+        console.log(`user.password${admin.password}`)
+        const isMatch = await bcrypt.compare(password,admin.password)
+        if(!isMatch){
+            throw new Error ('Unable to Login')
+        }
+        return user 
+    }
+    
+    adminSchema.methods.toJSON = function (){
+        const admin = this  
+        const adminObject = admin.toObject()
+        delete adminObject.password
+        delete adminObject.tokens
+        return adminObject
+    
+    }
+    //encrypt the password 
+    adminSchema.pre("save",async function(next){
+        const admin = this
+        if(admin.isModified('password')){
+            admin.password = await bcrypt.hash(admin.password,8)
+        }
+        next()
+    })
+    
+  
 
-)
 
-const admin = new mongoose.model('Admin',adminSchema);
+const admin = new mongoose.model('admin',adminSchema);
 module.exports = admin
