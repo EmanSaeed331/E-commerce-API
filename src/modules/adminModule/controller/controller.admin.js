@@ -1,17 +1,20 @@
 var users = require('../../Usermodule/models/userModel')
 var category = require('../../CategoryModule/model/category.model')
 var product = require('../../productModule/model/productModel')
-
+var admin = require('../model/model.admin')
 
 // get Count of users 
 let getUsersCount = (req,res)=>{
-users.count({},function(error, numOfUsers){
-    if (error){
-        console.log('cant count uses numbers ')
-        res.status(404).send({message:"Can't count users numbers"})
-    }
-    res.status(200).send({Users:numOfUsers})
-    console.log(`${numOfDocs}`)
+    let user = new admin()
+    users.count({},function(error, numOfUsers){
+        if (error){
+            console.log('cant count users numbers ')
+            res.status(404).send({message:"Can't count users numbers"})
+        }
+    console.log(`USERS${user.Users}`)
+   /*      user.update({'Users':numOfUsers})
+        user.save() */
+        res.status(200).send({Users:numOfUsers}) 
 })
 }
 // get Count of Categories 

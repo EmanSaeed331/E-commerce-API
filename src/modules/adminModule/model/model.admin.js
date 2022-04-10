@@ -7,15 +7,10 @@ const adminSchema = new mongoose.Schema({
     },
     email:{
         type:String ,
-        unique:true,
-        require: true,
+      
+        default :'EmanSaeed5330@gmail.com',
         trim:true,
-        lowerCase:true,
-        validate(value){
-            if(!validator.isEmail(value)){
-                throw new Error('Email is not valid')
-            }
-        }
+     
     },
     age:{
         type:Number,
@@ -45,7 +40,7 @@ const adminSchema = new mongoose.Schema({
         }
     }] ,
     Users:{
-        type:Number
+        type:Number,
     },
     Categories:{
         type:Number
@@ -57,5 +52,5 @@ const adminSchema = new mongoose.Schema({
 },
 )
 
-const Admin = new mongoose.model('Admin',adminSchema);
-module.exports = Admin
+const admin = new mongoose.model('Admin',adminSchema);
+module.exports = admin
