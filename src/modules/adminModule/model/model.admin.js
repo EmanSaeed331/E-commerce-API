@@ -39,17 +39,9 @@ const adminSchema = new mongoose.Schema({
             required:true,
         }
     }] ,
-    Users:{
-        type:Number,
-    },
-    Categories:{
-        type:Number
-    },
-    Products:{
-        type:Number
+   type:Number
     }
-    
-},
+
 )
 
 const admin = new mongoose.model('Admin',adminSchema);

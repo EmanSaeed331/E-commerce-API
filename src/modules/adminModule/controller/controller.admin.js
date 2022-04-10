@@ -6,14 +6,14 @@ var admin = require('../model/model.admin')
 // get Count of users 
 let getUsersCount = (req,res)=>{
     let user = new admin()
-    users.count({},function(error, numOfUsers){
+      users.count({}, function(error, numOfUsers){
         if (error){
             console.log('cant count users numbers ')
             res.status(404).send({message:"Can't count users numbers"})
         }
-    console.log(`USERS${user.Users}`)
    /*      user.update({'Users':numOfUsers})
         user.save() */
+       
         res.status(200).send({Users:numOfUsers}) 
 })
 }
