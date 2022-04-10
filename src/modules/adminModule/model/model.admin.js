@@ -5,6 +5,11 @@ const adminSchema = new mongoose.Schema({
         require:true,
         trim:true,
     },
+    lastname :{
+        type:String, 
+        require:true,
+        trim:true
+    },
     email:{
         type:String ,
       
@@ -39,7 +44,6 @@ const adminSchema = new mongoose.Schema({
             required:true,
         }
     }] ,
-   type:Number
     }
 
 )
