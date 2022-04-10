@@ -5,7 +5,6 @@ var admin = require('../model/model.admin')
 
 // get Count of users 
 let getUsersCount = (req,res)=>{
-    let user = new admin()
       users.count({}, function(error, numOfUsers){
         if (error){
             console.log('cant count users numbers ')
@@ -35,6 +34,11 @@ let getAllProducts = (req,res)=>{
         res.status(200).send({Product:numOfProduct})
     }))
 }
+
+// signUp Admin
+//login Admin
+// update Admin
+// Delete Admin 
 
 module.exports = 
      { 
