@@ -54,12 +54,12 @@ let AdminSignUp  = async (req,res)=>{
 //login Admin
 let AdminLogin =async (req,res)=>{
     try{
-        const admin = await Admin.findByCredentials(req.body.email , req.body.password)
-        console.log(admin)
+        const adminUser = await admin.findByCredentials(req.body.email , req.body.password)
+        console.log(adminUser)
 
-        const token = await admin.generateAuthToken()
+        const token = await adminUser.generateAuthToken()
         console.log(token)
-        res.status(201).send({admin,token})
+        res.status(201).send({adminUser,token})
     }
     catch(e){
         console.log(`error${e}`)

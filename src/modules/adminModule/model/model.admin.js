@@ -58,17 +58,17 @@ const adminSchema = new mongoose.Schema({
         return token
     }
     adminSchema.statics.findByCredentials = async (email, password)=>{
-        const admin = await admin.findOne({email})
-        if(!admin) {
+        const adminUser = await admin.findOne({email})
+        if(!adminUser) {
             throw new Error ('Unable to Login')
         }
         console.log(`password${password}`)
-        console.log(`user.password${admin.password}`)
-        const isMatch = await bcrypt.compare(password,admin.password)
+        console.log(`user.password${adminUser.password}`)
+        const isMatch = await bcrypt.compare(password,adminUser.password)
         if(!isMatch){
             throw new Error ('Unable to Login')
         }
-        return user 
+        return adminUser 
     }
     
     adminSchema.methods.toJSON = function (){
