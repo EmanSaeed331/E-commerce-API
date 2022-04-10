@@ -1,7 +1,7 @@
 var users = require('../../Usermodule/models/userModel')
 var category = require('../../CategoryModule/model/category.model')
 var product = require('../../productModule/model/productModel')
-var admin = require('../model/model.admin')
+var Admin = require('../model/model.admin')
 
 // get Count of users 
 let getUsersCount = (req,res)=>{
@@ -36,6 +36,19 @@ let getAllProducts = (req,res)=>{
 }
 
 // signUp Admin
+let AdminSignUp  = (req,res)=>{
+    const admin = new Admin(req.body)
+    try{
+     await admin.save();
+     sendWelcomeEmail(admin.email,admin.name)
+    const token =  await admin.generateAuthToken()
+     res.status(201).send({admin , token });
+    }
+    catch (e){
+        res.status(400).send(e)
+    }
+
+}
 //login Admin
 // update Admin
 // Delete Admin 
@@ -44,5 +57,6 @@ module.exports =
      { 
      getUsersCount ,
       getCategoriesCount,
-      getAllProducts
+      getAllProducts,
+      AdminSignUp
     }
