@@ -1,23 +1,24 @@
 const categoryRouter = require('express').Router()
 var {createCategory , getCategory , deleteCategory ,updateCategory } = require('../controller/category.controller')
+var {AdminAuth} = require('../../../middleware/auth')
 
-categoryRouter.post('/createCategory',(req,res) => {
+categoryRouter.post('/createCategory',AdminAuth,(req,res) => {
     createCategory(req,res)
 })
 
 // retrieve all categories
 
-categoryRouter.get('/getAllCategories' , (req,res)=>{
+categoryRouter.get('/getAllCategories' ,AdminAuth, (req,res)=>{
     getCategory(req,res)
 })
 
 
 // delete category 
-categoryRouter.delete('/deleteCategory/:id',(req,res)=>{
+categoryRouter.delete('/deleteCategory/:id',AdminAuth,(req,res)=>{
     deleteCategory(req,res);
 })
 // update 
-categoryRouter.patch('/updateCategory/:id',(req,res)=>{
+categoryRouter.patch('/updateCategory/:id',AdminAuth,(req,res)=>{
     updateCategory(req,res);
 })
 module.exports = categoryRouter
