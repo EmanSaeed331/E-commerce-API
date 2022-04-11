@@ -16,7 +16,7 @@ productRouter.patch('/updateProduct/:id',AdminAuth, (req,res)=>{
     updateProduct(req,res)
 })
 // delete product
-productRouter.delete('/deleteProduct/:id',AdminAuth(req,res)=>{
+productRouter.delete('/deleteProduct/:id',AdminAuth,(req,res)=>{
     deleteProduct(req,res)
 })
 // sortByNameAndPrice
