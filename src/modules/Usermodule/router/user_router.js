@@ -76,9 +76,6 @@ router.put ('/user/resetPassword',auth, async(req,res)=>{
         }
     }
     res.status(404).send({message:"token not verified "})
-    
-
-    
 })
 
 // welcome 

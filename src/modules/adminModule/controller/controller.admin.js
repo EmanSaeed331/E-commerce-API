@@ -2,6 +2,7 @@ var users = require('../../Usermodule/models/userModel')
 var category = require('../../CategoryModule/model/category.model')
 var product = require('../../productModule/model/productModel')
 var admin = require('../model/model.admin')
+var AdminAuth = require('../../../middleware/auth')
 
 
 // get Count of users 
@@ -67,6 +68,26 @@ let AdminLogin =async (req,res)=>{
     }
 }
 // update Admin
+let AdminUpdate = async(req,res)=>{
+    
+    const updates = Object.keys(req.body)
+    const allowedUpdates = ['name', 'lastname','email', 'password', 'age']
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+
+    if (!isValidOperation) {
+        return res.status(400).send({ error: 'Invalid updates!' })
+    }
+
+    try {
+        updates.forEach((update)=> req.admin[update] = req.body[update])
+        await req.admin.save()
+   
+    res.send(req.admin)
+    } catch (e) {
+        console.log(e)
+        res.status(400).send(e)
+    }
+}
 // Delete Admin 
 
 module.exports = 
@@ -75,5 +96,6 @@ module.exports =
       getCategoriesCount,
       getAllProducts,
       AdminSignUp,
-      AdminLogin
+      AdminLogin,
+      AdminUpdate
     }
