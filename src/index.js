@@ -14,6 +14,9 @@ app.use(productRouter)
 app.use(categoryRouter)
 app.use(reviewRouter)
 app.use(adminRouter)
+app.get('/',(req,res)=>{
+    res.status({message:'Start using app'})
+})
 app.listen(port,()=>{
     console.log(`Server is running on port + ${port}`)
 })
