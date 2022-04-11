@@ -10,19 +10,19 @@ let {
 let {AdminAuth} = require('../../../middleware/auth')
 
 // get All Users count 
-adminRouter.get('/Admin/getUserCount',(req,res) => {
+adminRouter.get('/Admin/getUserCount',AdminAuth,(req,res) => {
     getUsersCount(req,res);
 })
 
 // get All Categories Count
-adminRouter.get('/Admin/getCategoriesCount',(req,res)=>{
+adminRouter.get('/Admin/getCategoriesCount',AdminAuth,(req,res)=>{
     getCategoriesCount(req,res);
 
 })
 
 // get All Product Count 
 
-adminRouter.get('/Admin/getProductCount',(req,res)=>{
+adminRouter.get('/Admin/getProductCount',AdminAuth,(req,res)=>{
     getAllProducts(req,res)
 
 })
