@@ -102,8 +102,6 @@ router.patch('/user/update',auth, async(req,res)=>{
         res.status(400).send(e)
     }
 })
-
-
 //Deleting User 
 router.delete('/user/:id' , async (req,res,next)=>{
     try{
@@ -116,6 +114,7 @@ router.delete('/user/:id' , async (req,res,next)=>{
         next()
     }
     catch(e){
+        
         res.status(500).send()}
     })
 module.exports = router

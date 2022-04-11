@@ -89,7 +89,22 @@ let AdminUpdate = async(req,res)=>{
     }
 }
 // Delete Admin 
-
+let AdminDelete = async(req,res)=>{
+    try{
+        const id = req.params._id;
+        console.log('idddd'+id)
+        const adminN = await admin.findByIdAndDelete(id)
+        if(!adminN){
+            console.log('Not admin')
+            return res.status(404).send()
+        }
+        res.status(200).send(adminN)
+    }
+    catch(e){
+        console.log(e)
+        res.status(500).send()}
+    
+}
 module.exports = 
      { 
      getUsersCount ,
@@ -97,5 +112,7 @@ module.exports =
       getAllProducts,
       AdminSignUp,
       AdminLogin,
-      AdminUpdate
+      AdminUpdate,
+      AdminDelete
+
     }
