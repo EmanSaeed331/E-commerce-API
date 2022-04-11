@@ -6,7 +6,7 @@ const productRouter = require('./src/modules/productModule/router/product.router
 const categoryRouter = require('./src/modules/CategoryModule/router/category.router')
 const reviewRouter = require('./src/modules/ReviewModule/router/review.router')
 const adminRouter = require('./src/modules/adminModule/router/admin.router')
-const port = process.env.PORT | 5000;
+const port = process.env.PORT || 5000;
 require('./src/db/mongoose')
 app.use(express.json())
 app.use(userRouter)
