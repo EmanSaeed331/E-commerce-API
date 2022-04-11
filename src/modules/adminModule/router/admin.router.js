@@ -40,7 +40,7 @@ adminRouter.patch('/Admin/UpdateInfo',AdminAuth,async(req,res)=>{
     AdminUpdate(req,res)
 })
 //Admin Delete 
-adminRouter.delete('/Admin/DeleteAdmin/:id',async(req,res)=>{
+adminRouter.delete('/Admin/DeleteAdmin/:id',AdminAuth,async(req,res)=>{
     AdminDelete(req,res)
 })
 
